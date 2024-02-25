@@ -4,6 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Appointments from './componenets/appointments';
+import UploadDocument from './pages/UploadDocument';
 
 
 interface StyledTabsProps {
@@ -70,6 +71,8 @@ export default function Home() {
         </StyledTabs>
         <Box sx={{ p: 3 }} />
         {value === 0 && <Appointments />}
+        {/* {value === 1 && <UploadDataComponent />} */}
+        {value === 1 && <UploadDocument />}
       </Box>
     </Box>
   );

@@ -1,20 +1,43 @@
 import React, { useState } from 'react';
+import { Paper, Typography, Button, CircularProgress } from '@mui/material';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { styled } from '@mui/system';
+
+const UploadDataBox = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: theme.spacing(2),
+}));
 
 const UploadDocument: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+
+  const resetUploadStatus = () => {
+    // Reset the upload status to allow the user to try again
+    setUploading(false);
+    setUploadSuccess(false);
+  };
+
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files && event.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
     }
-  };
+    console.log('fileeeeee',file)
+  }
+  
 
   const handleUpload = async () => {
     if (!file) {
       alert('Please select a file');
       return;
     }
+  
 
     // Read the file as a buffer
     const fileBuffer = await file.arrayBuffer();
@@ -48,6 +71,7 @@ const UploadDocument: React.FC = () => {
 
     // Sending the request
     try {
+      setUploading(true);
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers,
@@ -57,16 +81,49 @@ const UploadDocument: React.FC = () => {
       // Handle the response as needed
       const responseData = await response.json();
       console.log(responseData);
+      setUploading(false);
+      setUploadSuccess(true);
     } catch (error) {
       console.error('Error:', error);
+      setUploading(false);
+      setUploadSuccess(false);
     }
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload and Send Request</button>
-    </div>
+    <UploadDataBox elevation={3}>
+      <Typography variant="h6" gutterBottom>
+        Upload Data
+      </Typography>
+      <Typography variant="body2" color="textSecondary">
+      Please choose your health records file. This file be encrypted and uploaded to private blockchain 
+      </Typography>
+      {/* Separate button for file upload */}
+      {uploading && <CircularProgress size={24} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />}
+      {uploadSuccess ? (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <CheckCircleIcon color="success" style={{ fontSize: 24, marginBottom: 8 }} />
+          <Typography variant="caption" color="success">
+            Completed
+          </Typography>
+          <Button variant="outlined" onClick={resetUploadStatus} style={{ marginTop: 8 }}>
+            Try Again
+          </Button>
+        </div>
+      ) : (
+        <>
+        <input
+            type="file"
+            id="file-input"
+            onChange={handleFileChange}
+            style={{ display: 'none' }} /><Button variant="contained" color="primary" onClick={() => document.getElementById('file-input')?.click()}>
+              Choose File
+            </Button><Button variant="contained" color="primary" onClick={handleUpload} disabled={uploading}>
+              Upload
+            </Button>
+          </>
+      )}
+    </UploadDataBox>
   );
 };
 

@@ -11,6 +11,7 @@ import { FaSignOutAlt } from 'react-icons/fa'
 export default function Header () {
     const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false)
     const [user, setUser] = React.useState('');
+    const [userAddress, setUserAddress] = React.useState('');
 
     const navigate = useNavigate()
 
@@ -21,6 +22,11 @@ export default function Header () {
                 setUser(username);
                 setIsUserLoggedIn(true)
         }
+        const address = localStorage.getItem('user-address')
+        if (address){
+            setUserAddress(address)
+        }
+
     })
 
     const onPress = () =>{
@@ -43,6 +49,9 @@ export default function Header () {
                     <Grid item xs={2}>
                             <Typography variant="h6" sx = {{marginTop: '215px', color: '#000000'}}>
                                 {isUserLoggedIn? `Welcome, ${user}` : 'Welcome'}
+                            </Typography>
+                            <Typography variant="h6" sx = {{color: '#000000', fontSize:'10px'}}>
+                                {isUserLoggedIn && `Address: ${userAddress}`}
                             </Typography>
                     </Grid>
                     <Grid item xs={5}>

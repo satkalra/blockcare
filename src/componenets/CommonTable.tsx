@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from '@mui/material';
 import { styled } from '@mui/system';
 
 interface Column {
@@ -59,7 +59,7 @@ const CommonTable: React.FC<CommonTableProps> = ({ columns, data, actionButtonTe
                   {column.isActionButton ? (
                     <Button
                       variant="outlined"
-                      onClick={() => onActionButtonClick && onActionButtonClick(row.id)}
+                      onClick={() => onActionButtonClick && onActionButtonClick(row.address)}
                     >
                       {actionButtonText || 'Action'}
                     </Button>
