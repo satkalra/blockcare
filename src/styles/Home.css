@@ -150,3 +150,10 @@
 .logo img {
   filter: invert(1);
 }
+
+.home{
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
