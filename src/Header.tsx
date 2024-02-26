@@ -42,7 +42,7 @@ export default function Header () {
                 <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={5}>
-                        <Typography variant="h6" sx={{marginTop: '90px', color: '#000000'}}>
+                        <Typography variant="h6" sx={{marginTop: '90px', color: '#000000', fontSize: '15px'}}>
                             Empowering Healthcare, Ensuring Equity
                         </Typography>
                     </Grid>
@@ -56,7 +56,7 @@ export default function Header () {
                     </Grid>
                     <Grid item xs={5}>
                             <Typography variant="h3" sx = {{marginTop: '20px'}}>
-                                <img src={logo} alt="Logo" height="150" />
+                                <img src={logo} alt="Logo" height="180" />
                             </Typography>
                             {isUserLoggedIn && 
                             <li>
